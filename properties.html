@@ -49,8 +49,8 @@
   </div>
 
   <!-- 🪟 Property Popup Modal -->
-  <div id="propertyPopup" class="popup" style="display:none;">
-    <div class="popup-content">
+  <div id="propertyPopup" class="modal">
+    <div class="modal-content">
       <h3 id="popupTitle">Add Property</h3>
       <form id="propertyForm" enctype="multipart/form-data">
         <input type="hidden" id="propertyId">
@@ -75,34 +75,12 @@
         
         <div class="popup-buttons">
           <button type="button" id="savePropertyBtn" class="btn">Save</button>
-          <button type="button" id="cancelPropertyBtn" class="btn" style="background:#888;">Cancel</button>
+          <button type="button" id="cancelPropertyBtn" class="btn cancel-btn">Cancel</button>
         </div>
       </form>
     </div>
   </div>
 
   <script src="js/script.js"></script>
-  <script>
-    // Modal show/hide logic
-    const addBtn = document.getElementById('addPropertyBtn');
-    const popup = document.getElementById('propertyPopup');
-    const cancelBtn = document.getElementById('cancelPropertyBtn');
-
-    addBtn.addEventListener('click', () => {
-      document.getElementById('popupTitle').textContent = "Add Property";
-      document.getElementById('propertyForm').reset();
-      document.getElementById('propertyId').value = "";
-      popup.style.display = 'flex';
-    });
-
-    cancelBtn.addEventListener('click', () => {
-      popup.style.display = 'none';
-    });
-
-    // Close popup when clicking outside
-    window.addEventListener('click', (e) => {
-      if (e.target === popup) popup.style.display = 'none';
-    });
-  </script>
 </body>
 </html>

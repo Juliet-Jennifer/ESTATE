@@ -1,10 +1,111 @@
-.menu-toggle {
-    display: block;
-  }
+/* ========== Global & Layout ========== */
+* {
+  box-sizing: border-box;
+}
 
-  .nav-links.active {
-    display: flex;
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background: #ffffff;
+  line-height: 1.5;
+  /* reserve space for fixed navbar */
+  padding-top: 64px;
+}
+
+a { color: inherit; }
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #004aad;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 1200;
+  width: 100vw;
+  box-sizing: border-box;
+}
+.navbar .logo {
+  font-weight: 700;
+}
+.nav-links {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links li a {
+  color: #e6f0ff;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.nav-links li a.active,
+.nav-links li a:hover {
+  background: #00307a;
+  color: #fff;
+}
+.menu-toggle { display: none; }
+
+/* Hero */
+.hero {
+  padding: 80px 20px;
+  background: linear-gradient(180deg,#eef6ff 0%, #ffffff 100%);
+  text-align: center;
+}
+.hero h1 { margin: 0 0 10px; color: #00307a; }
+.hero p { margin: 0 0 20px; color: #555; }
+
+/* Generic button */
+.btn {
+  display: inline-block;
+  background: #007bff;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+.btn:hover { opacity: 0.95; }
+.btn.cancel-btn,
+.btn.secondary { background: #888; }
+
+/* Features */
+.features { padding: 60px 20px; }
+.feature-cards { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+.feature-cards .card { background:#fff; padding:20px; border-radius:10px; width: 260px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+
+/* Modal active state */
+.modal.active { display: flex; }
+
+/* Small screens adjustments */
+@media (max-width: 768px) {
+  /* Mobile: make the dropdown nav span the full width beneath the navbar */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #004aad;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 64px;
+    padding: 10px 20px;
+    border-radius: 0 0 8px 8px;
   }
+  .menu-toggle { display: block; cursor: pointer; color: #fff; }
+  .nav-links.active { display:flex; }
+
+/* small placeholder removed */
  
 /* --- Form Section --- */
 .form-section {
@@ -190,6 +291,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .cards {
@@ -444,4 +546,5 @@ button {
 
 button:hover {
   opacity: 0.8;
+}
 }
