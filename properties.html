@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Management | EstateHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏠 Properties</h2>
+    <ul>
+      <li><a href="admin-dashboard.html">Dashboard</a></li>
+      <li><a href="#" class="active">Properties</a></li>
+      <li><a href="tenants.html">Tenants</a></li>
+      <li><a href="#">Payments</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <h2>🏠 Property Management</h2>
+
+    <!-- 🔍 Search + Filter + Add Button -->
+    <div class="top-bar">
+        <input type="text" id="searchProperty" placeholder="Search by name or location...">
+        <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="available">Available</option>
+            <option value="occupied">Occupied</option>
+        </select>
+        <button id="addPropertyBtn" class="btn">+ Add Property</button>
+    </div>
+
+    <!-- 🏢 Property Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Price (KSh)</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="propertyTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- 🪟 Property Popup Modal -->
+  <div id="propertyPopup" class="popup" style="display:none;">
+    <div class="popup-content">
+      <h3 id="popupTitle">Add Property</h3>
+      <form id="propertyForm" enctype="multipart/form-data">
+        <input type="hidden" id="propertyId">
+        
+        <label>Property Name</label>
+        <input type="text" id="propertyName" placeholder="Property Name" required>
+        
+        <label>Location</label>
+        <input type="text" id="propertyLocation" placeholder="Location" required>
+        
+        <label>Price (KSh)</label>
+        <input type="number" id="propertyPrice" placeholder="Price" required>
+        
+        <label>Status</label>
+        <select id="propertyStatus" required>
+          <option value="available">Available</option>
+          <option value="occupied">Occupied</option>
+        </select>
+        
+        <label>Upload Image</label>
+        <input type="file" id="propertyImage" accept="image/*">
+        
+        <div class="popup-buttons">
+          <button type="button" id="savePropertyBtn" class="btn">Save</button>
+          <button type="button" id="cancelPropertyBtn" class="btn" style="background:#888;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Modal show/hide logic
+    const addBtn = document.getElementById('addPropertyBtn');
+    const popup = document.getElementById('propertyPopup');
+    const cancelBtn = document.getElementById('cancelPropertyBtn');
+
+    addBtn.addEventListener('click', () => {
+      document.getElementById('popupTitle').textContent = "Add Property";
+      document.getElementById('propertyForm').reset();
+      document.getElementById('propertyId').value = "";
+      popup.style.display = 'flex';
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    // Close popup when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === popup) popup.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

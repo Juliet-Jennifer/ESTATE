@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tenant Management | EstateHub</title>
+ <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏢 Admin Panel</h2>
+    <ul>
+      <li><a href="admin-dashboard.html">Dashboard</a></li>
+      <li><a href="properties.html">Properties</a></li>
+      <li><a href="#" class="active">Tenants</a></li>
+      <li><a href="#">Payments</a></li>
+      <li><a href="#">Reports</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>Tenant Management</h1>
+      <button class="btn" id="addTenantBtn">+ Add Tenant</button>
+    </header>
+
+    <section class="table-section">
+      <table id="tenantTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Property</th>
+            <th>Rent Due (Ksh)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Tenants will load here -->
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Add/Edit Tenant Popup -->
+  <div id="tenantModal" class="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Add Tenant</h2>
+      <form id="tenantForm">
+        <input type="hidden" id="tenantId">
+        <label>Name</label>
+        <input type="text" id="tenantName" required>
+
+        <label>Email</label>
+        <input type="email" id="tenantEmail" required>
+
+        <label>Phone</label>
+        <input type="text" id="tenantPhone" required>
+
+        <label>Property ID</label>
+        <input type="number" id="tenantPropertyId" required>
+
+        <label>Rent Due (Ksh)</label>
+        <input type="number" id="tenantRentDue" required>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn">Save</button>
+          <button type="button" class="btn cancel" id="closeModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
