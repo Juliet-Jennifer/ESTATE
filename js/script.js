@@ -1,4 +1,4 @@
-// Small utility to open/close modals by id. Exposed on window for reuse.
+// open/close modals by id. Exposed for reuse.
 window.openModal = function (id) {
   var modal = document.getElementById(id);
   if (!modal) return;
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // Responsive/mobile nav toggles: any .menu-toggle will toggle the nearest .nav-links
   document.querySelectorAll('.menu-toggle').forEach(function (toggle) {
     toggle.addEventListener('click', function () {
-      // try to find nav-links by id first, else find sibling
       var navLinks = document.getElementById('navLinks') || toggle.closest('nav')?.querySelector('.nav-links');
       if (!navLinks) return;
       navLinks.classList.toggle('active');
