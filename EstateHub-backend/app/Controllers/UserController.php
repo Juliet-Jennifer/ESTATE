@@ -1,11 +1,11 @@
 <?php
 namespace App\Controllers;
 
-use app\Models\User;
-use app\Middleware\AuthMiddleware;
-use app\Utils\Response;
-use app\Services\FileUploadService;
-use app\Utils\Logger;
+use App\Models\User;
+use App\Middleware\AuthMiddleware;
+use App\Utils\Response;
+use App\Services\FileUploadService;
+use App\Utils\Logger;
 
 class UserController {
     private $userModel;

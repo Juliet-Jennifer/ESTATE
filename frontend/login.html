@@ -55,29 +55,91 @@
     <p>&copy; 2025 EstateHub | All Rights Reserved.</p>
   </footer>
 
-  <script src="js/script.js"></script>
   <script>
-    // Login form handler
-    document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+    // Login form handler - DO NOT load script.js here to avoid conflicts
+    document.getElementById('loginForm')?.addEventListener('submit', async function(e) {
       e.preventDefault();
       
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      
-      // Simple validation
+
       if (!email || !password) {
         alert('Please fill in all fields');
         return;
       }
+
+      // Disable submit button to prevent double submission
+      const submitButton = e.target.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Logging in...';
+
+      try {
+        const response = await fetch('http://localhost:8000/api/v1/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success' && data.data?.token) {
+          // Save authentication data
+          localStorage.setItem('authToken', data.data.token);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
+          
+          // Get user role
+          const role = data.data.user?.role;
+          
+          console.log('Login successful! Role:', role);
+          alert(`Welcome back, ${data.data.user.full_name}!`);
+          
+          // Role-based redirect
+          if (role === 'admin') {
+            console.log('Redirecting to admin dashboard');
+            window.location.href = 'admin-dashboard.html';
+          } else if (role === 'tenant') {
+            console.log('Redirecting to tenant dashboard');
+            window.location.href = 'tenants_dashboard.html';
+          } else {
+            // Fallback for unknown roles
+            console.warn('Unknown role:', role);
+            window.location.href = 'index.html';
+          }
+        } else {
+          alert('Login failed: ' + (data.error?.message || 'Invalid credentials'));
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        alert('Login failed. Please check your connection and try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    });
+
+    // Check if user is already logged in
+    window.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('authToken');
+      const user = localStorage.getItem('user');
       
-      // Simulate login (in production, this would be an API call)
-      // For demo purposes, redirect based on email
-      if (email.includes('admin')) {
-        alert('Login successful! Redirecting to admin dashboard...');
-        window.location.href = 'properties.html';
-      } else {
-        alert('Login successful! Redirecting to tenant dashboard...');
-        window.location.href = 'tenants_dashboard.html';
+      if (token && user) {
+        try {
+          const userData = JSON.parse(user);
+          console.log('User already logged in, redirecting...');
+          
+          // Redirect to appropriate dashboard
+          if (userData.role === 'admin') {
+            window.location.href = 'admin-dashboard.html';
+          } else if (userData.role === 'tenant') {
+            window.location.href = 'tenants_dashboard.html';
+          }
+        } catch (err) {
+          // Invalid stored data, clear it
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('user');
+        }
       }
     });
   </script>

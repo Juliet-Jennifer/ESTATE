@@ -38,6 +38,12 @@
           <label for="email">Email Address</label>
           <input type="email" id="email" name="email" placeholder="Enter your email" required>
         </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="0712345678 or +254712345678" required>
+          <small style="color: #666; font-size: 0.85rem;">Format: 0712345678 or +254712345678</small>
+        </div>
         
         <div class="form-group">
           <label for="role">Account Type</label>
@@ -51,7 +57,7 @@
         <div class="form-group">
           <label for="password">Password</label>
           <div class="password-container">
-            <input type="password" id="password" name="password" placeholder="Create a password" required minlength="6">
+            <input type="password" id="password" name="password" placeholder="Create a password (min 6 characters)" required minlength="6">
             <span class="toggle-password">👁️</span>
           </div>
         </div>
@@ -78,37 +84,5 @@
   </footer>
 
   <script src="js/script.js"></script>
-  <script>
-    // Registration form handler
-    document.getElementById('registerForm')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const role = document.getElementById('role').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      
-      // Validation
-      if (!name || !email || !role || !password || !confirmPassword) {
-        alert('Please fill in all fields');
-        return;
-      }
-      
-      if (password !== confirmPassword) {
-        alert('Passwords do not match');
-        return;
-      }
-      
-      if (password.length < 6) {
-        alert('Password must be at least 6 characters long');
-        return;
-      }
-      
-      // Simulate registration (in production, this would be an API call)
-      alert('Registration successful! Please login with your credentials.');
-      window.location.href = 'login.html';
-    });
-  </script>
 </body>
 </html>
