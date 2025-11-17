@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maintenance Management - EstateHub">
+  <title>Maintenance | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏢 Admin Panel</h2>
+    <ul>
+      <li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+      <li><a href="properties.html">🏘 Properties</a></li>
+      <li><a href="tenants.html">👥 Tenants</a></li>
+      <li><a href="payments.html">💰 Payments</a></li>
+      <li><a href="maintenance.html" class="active">🔧 Maintenance</a></li>
+      <li><a href="reports.html">📋 Reports</a></li>
+      <li><a href="index.html">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>🔧 Maintenance Requests</h1>
+      <button class="btn" id="addRequestBtn">+ New Request</button>
+    </header>
+
+    <!-- Statistics Cards -->
+    <section class="cards">
+      <div class="card">
+        <h3>Total Requests</h3>
+        <p>28</p>
+        <small style="color: #666;">This Month</small>
+      </div>
+      <div class="card">
+        <h3>Pending</h3>
+        <p style="color: #ffc107;">8</p>
+        <small style="color: #666;">Awaiting Action</small>
+      </div>
+      <div class="card">
+        <h3>In Progress</h3>
+        <p style="color: #007bff;">5</p>
+        <small style="color: #666;">Being Worked On</small>
+      </div>
+      <div class="card">
+        <h3>Completed</h3>
+        <p style="color: #27ae60;">15</p>
+        <small style="color: #27ae60;">↑ 20% vs last month</small>
+      </div>
+    </section>
+
+    <!-- Filter and Search -->
+    <div class="top-bar" style="margin-top: 30px;">
+      <input type="text" id="searchRequest" placeholder="🔍 Search by property, tenant, or issue...">
+      <select id="statusFilter">
+        <option value="">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+      <select id="priorityFilter">
+        <option value="">All Priorities</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+    </div>
+
+    <!-- Requests Table -->
+    <section class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Property</th>
+            <th>Tenant</th>
+            <th>Issue</th>
+            <th>Priority</th>
+            <th>Date Reported</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="requestsTableBody">
+          <!-- Requests will be dynamically loaded -->
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Add/Edit Request Modal -->
+  <div id="requestModal" class="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">New Maintenance Request</h2>
+      <form id="requestForm">
+        <input type="hidden" id="requestId">
+        
+        <label for="requestProperty">Property</label>
+        <select id="requestProperty" required>
+          <option value="">Select Property</option>
+          <option value="Sunset Apartments">Sunset Apartments</option>
+          <option value="Green Valley Estate">Green Valley Estate</option>
+          <option value="City Center Loft">City Center Loft</option>
+          <option value="Parklands Villa">Parklands Villa</option>
+        </select>
+
+        <label for="requestTenant">Tenant</label>
+        <input type="text" id="requestTenant" placeholder="Tenant name" required>
+
+        <label for="requestIssue">Issue Description</label>
+        <textarea id="requestIssue" rows="3" placeholder="Describe the maintenance issue..." required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; resize: vertical;"></textarea>
+
+        <label for="requestPriority">Priority</label>
+        <select id="requestPriority" required>
+          <option value="">Select Priority</option>
+          <option value="high">🔴 High - Urgent</option>
+          <option value="medium">🟡 Medium - Important</option>
+          <option value="low">🟢 Low - Can Wait</option>
+        </select>
+
+        <label for="requestStatus">Status</label>
+        <select id="requestStatus" required>
+          <option value="pending">Pending</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn">Save Request</button>
+          <button type="button" class="btn cancel" id="closeModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Sample maintenance requests
+    let requests = [
+      {
+        id: 'MR001',
+        property: 'Sunset Apartments',
+        tenant: 'Alice Mwangi',
+        issue: 'Air conditioning unit not working',
+        priority: 'high',
+        dateReported: '2025-11-15',
+        status: 'pending'
+      },
+      {
+        id: 'MR002',
+        property: 'Green Valley Estate',
+        tenant: 'Brian Ochieng',
+        issue: 'Leaking kitchen faucet',
+        priority: 'medium',
+        dateReported: '2025-11-14',
+        status: 'in-progress'
+      },
+      {
+        id: 'MR003',
+        property: 'City Center Loft',
+        tenant: 'Catherine Wanjiku',
+        issue: 'Broken door lock',
+        priority: 'high',
+        dateReported: '2025-11-13',
+        status: 'pending'
+      },
+      {
+        id: 'MR004',
+        property: 'Parklands Villa',
+        tenant: 'David Kamau',
+        issue: 'Light bulb replacement needed',
+        priority: 'low',
+        dateReported: '2025-11-12',
+        status: 'completed'
+      },
+      {
+        id: 'MR005',
+        property: 'Sunset Apartments',
+        tenant: 'Alice Mwangi',
+        issue: 'Clogged bathroom drain',
+        priority: 'medium',
+        dateReported: '2025-11-10',
+        status: 'completed'
+      }
+    ];
+
+    // Render requests table
+    function renderRequests(filteredRequests = requests) {
+      const tbody = document.getElementById('requestsTableBody');
+      tbody.innerHTML = '';
+
+      filteredRequests.forEach(request => {
+        const row = document.createElement('tr');
+        
+        // Priority badge
+        let priorityBadge = '';
+        if (request.priority === 'high') {
+          priorityBadge = '<span style="background: #f8d7da; color: #721c24; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">🔴 High</span>';
+        } else if (request.priority === 'medium') {
+          priorityBadge = '<span style="background: #fff3cd; color: #856404; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">🟡 Medium</span>';
+        } else {
+          priorityBadge = '<span style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">🟢 Low</span>';
+        }
+
+        // Status badge
+        let statusBadge = '';
+        if (request.status === 'pending') {
+          statusBadge = '<span style="background: #fff3cd; color: #856404; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Pending</span>';
+        } else if (request.status === 'in-progress') {
+          statusBadge = '<span style="background: #cfe2ff; color: #084298; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">In Progress</span>';
+        } else {
+          statusBadge = '<span style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Completed</span>';
+        }
+
+        row.innerHTML = `
+          <td><strong>${request.id}</strong></td>
+          <td>${request.property}</td>
+          <td>${request.tenant}</td>
+          <td style="max-width: 250px;">${request.issue}</td>
+          <td>${priorityBadge}</td>
+          <td>${new Date(request.dateReported).toLocaleDateString()}</td>
+          <td>${statusBadge}</td>
+          <td class="action-buttons">
+            <button class="edit" onclick="editRequest('${request.id}')">✏️ Edit</button>
+            <button class="delete" onclick="deleteRequest('${request.id}')">🗑️ Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Search functionality
+    document.getElementById('searchRequest')?.addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const filtered = requests.filter(r => 
+        r.property.toLowerCase().includes(searchTerm) || 
+        r.tenant.toLowerCase().includes(searchTerm) ||
+        r.issue.toLowerCase().includes(searchTerm) ||
+        r.id.toLowerCase().includes(searchTerm)
+      );
+      renderRequests(filtered);
+    });
+
+    // Filter by status
+    document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+      const status = e.target.value;
+      const filtered = status ? requests.filter(r => r.status === status) : requests;
+      renderRequests(filtered);
+    });
+
+    // Filter by priority
+    document.getElementById('priorityFilter')?.addEventListener('change', function(e) {
+      const priority = e.target.value;
+      const filtered = priority ? requests.filter(r => r.priority === priority) : requests;
+      renderRequests(filtered);
+    });
+
+    // Open request modal
+    document.getElementById('addRequestBtn')?.addEventListener('click', function() {
+      document.getElementById('modalTitle').textContent = 'New Maintenance Request';
+      document.getElementById('requestForm').reset();
+      document.getElementById('requestId').value = '';
+      document.getElementById('requestStatus').value = 'pending';
+      document.getElementById('requestModal').classList.add('active');
+    });
+
+    // Close modal
+    document.getElementById('closeModal')?.addEventListener('click', function() {
+      document.getElementById('requestModal').classList.remove('active');
+    });
+
+    // Save request
+    document.getElementById('requestForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById('requestId').value;
+      const request = {
+        id: id || 'MR' + String(requests.length + 1).padStart(3, '0'),
+        property: document.getElementById('requestProperty').value,
+        tenant: document.getElementById('requestTenant').value,
+        issue: document.getElementById('requestIssue').value,
+        priority: document.getElementById('requestPriority').value,
+        dateReported: new Date().toISOString().split('T')[0],
+        status: document.getElementById('requestStatus').value
+      };
+
+      if (id) {
+        const index = requests.findIndex(r => r.id === id);
+        requests[index] = request;
+      } else {
+        requests.unshift(request);
+      }
+
+      renderRequests();
+      document.getElementById('requestModal').classList.remove('active');
+      alert('Maintenance request saved successfully!');
+    });
+
+    // Edit request
+    window.editRequest = function(id) {
+      const request = requests.find(r => r.id === id);
+      if (!request) return;
+
+      document.getElementById('modalTitle').textContent = 'Edit Maintenance Request';
+      document.getElementById('requestId').value = request.id;
+      document.getElementById('requestProperty').value = request.property;
+      document.getElementById('requestTenant').value = request.tenant;
+      document.getElementById('requestIssue').value = request.issue;
+      document.getElementById('requestPriority').value = request.priority;
+      document.getElementById('requestStatus').value = request.status;
+      
+      document.getElementById('requestModal').classList.add('active');
+    };
+
+    // Delete request
+    window.deleteRequest = function(id) {
+      if (confirm('Are you sure you want to delete this maintenance request?')) {
+        requests = requests.filter(r => r.id !== id);
+        renderRequests();
+        alert('Request deleted successfully!');
+      }
+    };
+
+    // Initial render
+    renderRequests();
+  </script>
+</body>
+</html>

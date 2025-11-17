@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tenant Dashboard - EstateHub">
+  <title>Tenant Dashboard | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏠 Tenant Panel</h2>
+    <ul>
+      <li><a href="tenants_dashboard.html" class="active">📊 Dashboard</a></li>
+      <li><a href="#">🏘 My Property</a></li>
+      <li><a href="#">💰 Payments</a></li>
+      <li><a href="#">🔧 Maintenance</a></li>
+      <li><a href="#">📢 Notices</a></li>
+      <li><a href="index.html">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <div>
+        <h1>Welcome, Tenant</h1>
+        <p id="currentDate" style="color: #666; margin-top: 5px;"></p>
+      </div>
+    </header>
+
+    <section class="cards">
+      <div class="card">
+        <h3>Active Rentals</h3>
+        <p>1</p>
+      </div>
+      <div class="card">
+        <h3>Pending Payments</h3>
+        <p style="color: #dc3545;">1</p>
+      </div>
+      <div class="card">
+        <h3>Maintenance Requests</h3>
+        <p>2</p>
+      </div>
+      <div class="card">
+        <h3>Next Due Date</h3>
+        <p style="font-size: 1.2rem; color: #ffc107;">Dec 1, 2025</p>
+      </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="table-section" style="margin-top: 40px;">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Recent Activity</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Property</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nov 15, 2025</td>
+            <td>Maintenance Request: Broken AC</td>
+            <td>Sunset Apartments - Unit 5B</td>
+            <td><span class="status" style="background: #fff3cd; color: #856404; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Pending</span></td>
+          </tr>
+          <tr>
+            <td>Nov 10, 2025</td>
+            <td>Rent Payment - November</td>
+            <td>Sunset Apartments - Unit 5B</td>
+            <td><span class="status available" style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Completed</span></td>
+          </tr>
+          <tr>
+            <td>Nov 5, 2025</td>
+            <td>Maintenance Request: Plumbing Issue</td>
+            <td>Sunset Apartments - Unit 5B</td>
+            <td><span class="status available" style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Resolved</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Current Property Details -->
+    <section style="margin-top: 40px;">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">My Current Property</h2>
+      <div class="card" style="text-align: left; padding: 30px;">
+        <h3 style="color: #004aad; margin-bottom: 15px;">Sunset Apartments - Unit 5B</h3>
+        <p style="color: #666; margin-bottom: 10px;"><strong>Location:</strong> Westlands, Nairobi</p>
+        <p style="color: #666; margin-bottom: 10px;"><strong>Monthly Rent:</strong> KSh 50,000</p>
+        <p style="color: #666; margin-bottom: 10px;"><strong>Lease Start:</strong> January 1, 2025</p>
+        <p style="color: #666; margin-bottom: 20px;"><strong>Lease End:</strong> December 31, 2025</p>
+        <button class="btn" onclick="alert('Payment feature coming soon!')">Pay Rent</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Display current date
+    const dateElement = document.getElementById('currentDate');
+    if (dateElement) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      dateElement.textContent = new Date().toLocaleDateString('en-US', options);
+    }
+  </script>
+</body>
+</html>

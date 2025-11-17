@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse available properties - EstateHub">
+  <title>Available Properties | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">🏡 EstateHub</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="public-properties.html" class="active">Properties</a></li>
+        <li><a href="maintenance.html">Maintenance</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+      <div class="menu-toggle" id="menuToggle">☰</div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" style="padding: 60px 20px; min-height: 300px;">
+    <div class="hero-content">
+      <h1>Find Your Perfect Home</h1>
+      <p>Browse our collection of quality rental properties in Nairobi</p>
+    </div>
+  </section>
+
+  <!-- Search and Filter Section -->
+  <section style="padding: 40px 20px; background: #f7f8fc;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px;">
+        <input type="text" id="searchProperty" placeholder="🔍 Search properties..." style="flex: 1; min-width: 250px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+        
+        <select id="locationFilter" style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+          <option value="">All Locations</option>
+          <option value="Westlands">Westlands</option>
+          <option value="Karen">Karen</option>
+          <option value="CBD">CBD</option>
+          <option value="Kilimani">Kilimani</option>
+          <option value="Parklands">Parklands</option>
+        </select>
+        
+        <select id="priceFilter" style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+          <option value="">All Prices</option>
+          <option value="0-50000">Under KSh 50,000</option>
+          <option value="50000-75000">KSh 50,000 - 75,000</option>
+          <option value="75000-100000">KSh 75,000 - 100,000</option>
+          <option value="100000+">Above KSh 100,000</option>
+        </select>
+        
+        <button class="btn" onclick="filterProperties()" style="white-space: nowrap;">🔍 Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Properties Grid -->
+  <section class="properties-section">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h2 style="text-align: center; margin-bottom: 50px;">Available Properties</h2>
+      
+      <div class="property-grid" id="propertyGrid">
+        <!-- Properties will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Property Detail Modal -->
+  <div id="propertyDetailModal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <h2 id="propertyDetailTitle"></h2>
+      <img id="propertyDetailImage" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin: 20px 0;">
+      
+      <div id="propertyDetailContent" style="margin: 20px 0;">
+        <!-- Property details will be loaded here -->
+      </div>
+      
+      <div style="display: flex; gap: 10px; margin-top: 25px;">
+        <button class="btn" onclick="alert('Contact feature coming soon! Call: +254 700 000000')">📞 Contact Owner</button>
+        <button class="btn cancel-btn" onclick="closeModal('propertyDetailModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 EstateHub | All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Sample properties data
+    const properties = [
+      {
+        id: 1,
+        name: 'Sunset Apartments',
+        location: 'Westlands, Nairobi',
+        price: 50000,
+        bedrooms: 2,
+        bathrooms: 2,
+        size: 1200,
+        status: 'available',
+        image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400',
+        description: 'Modern 2-bedroom apartment with stunning sunset views, fully equipped kitchen, and secure parking.',
+        amenities: ['Swimming Pool', 'Gym', 'Security', 'Parking', 'Water 24/7']
+      },
+      {
+        id: 2,
+        name: 'Green Valley Estate',
+        location: 'Karen, Nairobi',
+        price: 75000,
+        bedrooms: 3,
+        bathrooms: 3,
+        size: 1800,
+        status: 'available',
+        image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400',
+        description: 'Spacious 3-bedroom house in a serene environment with beautiful gardens and modern finishes.',
+        amenities: ['Garden', 'Security', 'Parking', 'Backup Generator', 'Borehole Water']
+      },
+      {
+        id: 3,
+        name: 'City Center Loft',
+        location: 'CBD, Nairobi',
+        price: 60000,
+        bedrooms: 1,
+        bathrooms: 1,
+        size: 800,
+        status: 'available',
+        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400',
+        description: 'Stylish studio loft in the heart of the city with easy access to business districts and amenities.',
+        amenities: ['Elevator', 'Security', 'High-Speed Internet', 'City View']
+      },
+      {
+        id: 4,
+        name: 'Kilimani Heights',
+        location: 'Kilimani, Nairobi',
+        price: 55000,
+        bedrooms: 2,
+        bathrooms: 2,
+        size: 1100,
+        status: 'available',
+        image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400',
+        description: 'Comfortable 2-bedroom apartment with modern amenities in a prime location.',
+        amenities: ['Swimming Pool', 'Gym', 'Parking', 'Playground', 'Security']
+      },
+      {
+        id: 5,
+        name: 'Parklands Villa',
+        location: 'Parklands, Nairobi',
+        price: 80000,
+        bedrooms: 4,
+        bathrooms: 3,
+        size: 2200,
+        status: 'available',
+        image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400',
+        description: 'Luxurious 4-bedroom villa with a private garden, perfect for families.',
+        amenities: ['Private Garden', 'Security', 'Parking', 'Servant Quarter', 'Study Room']
+      },
+      {
+        id: 6,
+        name: 'Riverside Apartments',
+        location: 'Westlands, Nairobi',
+        price: 65000,
+        bedrooms: 3,
+        bathrooms: 2,
+        size: 1500,
+        status: 'available',
+        image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400',
+        description: 'Beautiful 3-bedroom apartment overlooking the river with excellent facilities.',
+        amenities: ['Balcony', 'Gym', 'Security', 'Parking', 'Clubhouse']
+      }
+    ];
+
+    // Render properties
+    function renderProperties(propertiesToRender = properties) {
+      const grid = document.getElementById('propertyGrid');
+      grid.innerHTML = '';
+
+      if (propertiesToRender.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; font-size: 1.2rem; color: #666;">No properties found matching your criteria.</p>';
+        return;
+      }
+
+      propertiesToRender.forEach(property => {
+        const card = document.createElement('div');
+        card.className = 'property-card';
+        card.innerHTML = `
+          <img src="${property.image}" alt="${property.name}">
+          <div class="property-card-content">
+            <h3>${property.name}</h3>
+            <p class="location">📍 ${property.location}</p>
+            <div style="display: flex; gap: 15px; margin: 10px 0; font-size: 0.9rem; color: #666;">
+              <span>🛏️ ${property.bedrooms} Beds</span>
+              <span>🚿 ${property.bathrooms} Baths</span>
+              <span>📐 ${property.size} sqft</span>
+            </div>
+            <p class="price">KSh ${property.price.toLocaleString()}/month</p>
+            <button class="btn-view" onclick="viewProperty(${property.id})">View Details</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // View property details
+    window.viewProperty = function(id) {
+      const property = properties.find(p => p.id === id);
+      if (!property) return;
+
+      document.getElementById('propertyDetailTitle').textContent = property.name;
+      document.getElementById('propertyDetailImage').src = property.image;
+      
+      document.getElementById('propertyDetailContent').innerHTML = `
+        <div style="margin-bottom: 15px;">
+          <p style="font-size: 1.1rem; color: #666; margin-bottom: 10px;">📍 ${property.location}</p>
+          <p style="font-size: 1.5rem; color: #27ae60; font-weight: 700;">KSh ${property.price.toLocaleString()}/month</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; padding: 20px; background: #f7f8fc; border-radius: 8px;">
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem;">🛏️</div>
+            <strong>${property.bedrooms}</strong>
+            <div style="font-size: 0.85rem; color: #666;">Bedrooms</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem;">🚿</div>
+            <strong>${property.bathrooms}</strong>
+            <div style="font-size: 0.85rem; color: #666;">Bathrooms</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem;">📐</div>
+            <strong>${property.size}</strong>
+            <div style="font-size: 0.85rem; color: #666;">sqft</div>
+          </div>
+        </div>
+        
+        <div style="margin: 20px 0;">
+          <h3 style="margin-bottom: 10px; color: #2c3e50;">Description</h3>
+          <p style="color: #666; line-height: 1.8;">${property.description}</p>
+        </div>
+        
+        <div style="margin: 20px 0;">
+          <h3 style="margin-bottom: 10px; color: #2c3e50;">Amenities</h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            ${property.amenities.map(a => `<span style="background: #e6f0ff; color: #004aad; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem;">✓ ${a}</span>`).join('')}
+          </div>
+        </div>
+      `;
+      
+      openModal('propertyDetailModal');
+    };
+
+    // Filter properties
+    window.filterProperties = function() {
+      const searchTerm = document.getElementById('searchProperty').value.toLowerCase();
+      const location = document.getElementById('locationFilter').value;
+      const priceRange = document.getElementById('priceFilter').value;
+
+      let filtered = properties;
+
+      // Search filter
+      if (searchTerm) {
+        filtered = filtered.filter(p => 
+          p.name.toLowerCase().includes(searchTerm) || 
+          p.location.toLowerCase().includes(searchTerm) ||
+          p.description.toLowerCase().includes(searchTerm)
+        );
+      }
+
+      // Location filter
+      if (location) {
+        filtered = filtered.filter(p => p.location.includes(location));
+      }
+
+      // Price filter
+      if (priceRange) {
+        if (priceRange === '100000+') {
+          filtered = filtered.filter(p => p.price >= 100000);
+        } else {
+          const [min, max] = priceRange.split('-').map(Number);
+          filtered = filtered.filter(p => p.price >= min && p.price <= max);
+        }
+      }
+
+      renderProperties(filtered);
+    };
+
+    // Search on input
+    document.getElementById('searchProperty')?.addEventListener('input', filterProperties);
+    document.getElementById('locationFilter')?.addEventListener('change', filterProperties);
+    document.getElementById('priceFilter')?.addEventListener('change', filterProperties);
+
+    // Initial render
+    renderProperties();
+  </script>
+</body>
+</html>

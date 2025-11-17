@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reports and Analytics - EstateHub">
+  <title>Reports | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏢 Admin Panel</h2>
+    <ul>
+      <li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+      <li><a href="properties.html">🏘 Properties</a></li>
+      <li><a href="tenants.html">👥 Tenants</a></li>
+      <li><a href="payments.html">💰 Payments</a></li>
+      <li><a href="maintenance.html">🔧 Maintenance</a></li>
+      <li><a href="reports.html" class="active">📋 Reports</a></li>
+      <li><a href="index.html">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>📋 Reports & Analytics</h1>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn" onclick="window.print()">🖨️ Print Report</button>
+        <button class="btn" style="background: #27ae60;" onclick="alert('Export feature coming soon!')">📥 Export CSV</button>
+      </div>
+    </header>
+
+    <!-- Report Filter Section -->
+    <section style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px;">
+      <h3 style="margin-bottom: 20px; color: #2c3e50;">Generate Report</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Report Type</label>
+          <select id="reportType" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+            <option value="revenue">Revenue Report</option>
+            <option value="occupancy">Occupancy Report</option>
+            <option value="maintenance">Maintenance Report</option>
+            <option value="tenant">Tenant Report</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Time Period</label>
+          <select id="timePeriod" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+            <option value="current-month">Current Month</option>
+            <option value="last-month">Last Month</option>
+            <option value="quarter">This Quarter</option>
+            <option value="year">This Year</option>
+            <option value="custom">Custom Range</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 8px; font-weight: 600;">Property</label>
+          <select id="propertyFilter" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+            <option value="all">All Properties</option>
+            <option value="sunset">Sunset Apartments</option>
+            <option value="green-valley">Green Valley Estate</option>
+            <option value="city-center">City Center Loft</option>
+          </select>
+        </div>
+        <div style="display: flex; align-items: flex-end;">
+          <button class="btn" onclick="generateReport()" style="width: 100%;">Generate Report</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Financial Overview -->
+    <section>
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Financial Overview - November 2025</h2>
+      
+      <div class="cards" style="margin-bottom: 30px;">
+        <div class="card">
+          <h3>Total Revenue</h3>
+          <p style="color: #27ae60;">KSh 1,250,000</p>
+          <small style="color: #27ae60;">↑ 15% from October</small>
+        </div>
+        <div class="card">
+          <h3>Operating Expenses</h3>
+          <p style="color: #dc3545;">KSh 350,000</p>
+          <small style="color: #666;">Maintenance & Utilities</small>
+        </div>
+        <div class="card">
+          <h3>Net Income</h3>
+          <p style="color: #004aad;">KSh 900,000</p>
+          <small style="color: #27ae60;">72% Profit Margin</small>
+        </div>
+        <div class="card">
+          <h3>Outstanding Dues</h3>
+          <p style="color: #ffc107;">KSh 450,000</p>
+          <small style="color: #666;">From 9 Tenants</small>
+        </div>
+      </div>
+
+      <!-- Revenue Chart -->
+      <div class="chart-card" style="margin-bottom: 30px;">
+        <h3>Monthly Revenue Trend</h3>
+        <div style="height: 300px; display: flex; align-items: flex-end; gap: 15px; padding: 30px 20px;">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 100%; background: linear-gradient(to top, #007bff, #0056b3); height: 120px; border-radius: 8px 8px 0 0;"></div>
+            <span style="margin-top: 10px; font-size: 0.9rem; color: #666;">Jun</span>
+            <strong style="color: #004aad;">950K</strong>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 100%; background: linear-gradient(to top, #007bff, #0056b3); height: 150px; border-radius: 8px 8px 0 0;"></div>
+            <span style="margin-top: 10px; font-size: 0.9rem; color: #666;">Jul</span>
+            <strong style="color: #004aad;">1.05M</strong>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 100%; background: linear-gradient(to top, #007bff, #0056b3); height: 165px; border-radius: 8px 8px 0 0;"></div>
+            <span style="margin-top: 10px; font-size: 0.9rem; color: #666;">Aug</span>
+            <strong style="color: #004aad;">1.1M</strong>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 100%; background: linear-gradient(to top, #007bff, #0056b3); height: 140px; border-radius: 8px 8px 0 0;"></div>
+            <span style="margin-top: 10px; font-size: 0.9rem; color: #666;">Sep</span>
+            <strong style="color: #004aad;">1.0M</strong>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 100%; background: linear-gradient(to top, #007bff, #0056b3); height: 180px; border-radius: 8px 8px 0 0;"></div>
+            <span style="margin-top: 10px; font-size: 0.9rem; color: #666;">Oct</span>
+            <strong style="color: #004aad;">1.15M</strong>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 100%; background: linear-gradient(to top, #27ae60, #219150); height: 195px; border-radius: 8px 8px 0 0;"></div>
+            <span style="margin-top: 10px; font-size: 0.9rem; color: #666;">Nov</span>
+            <strong style="color: #27ae60;">1.25M</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Property Performance -->
+    <section class="table-section">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Property Performance</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Total Units</th>
+            <th>Occupied</th>
+            <th>Occupancy Rate</th>
+            <th>Monthly Revenue</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sunset Apartments</strong></td>
+            <td>10</td>
+            <td>8</td>
+            <td>80%</td>
+            <td>KSh 400,000</td>
+            <td><span style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Good</span></td>
+          </tr>
+          <tr>
+            <td><strong>Green Valley Estate</strong></td>
+            <td>8</td>
+            <td>7</td>
+            <td>87.5%</td>
+            <td>KSh 525,000</td>
+            <td><span style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Excellent</span></td>
+          </tr>
+          <tr>
+            <td><strong>City Center Loft</strong></td>
+            <td>6</td>
+            <td>3</td>
+            <td>50%</td>
+            <td>KSh 180,000</td>
+            <td><span style="background: #fff3cd; color: #856404; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Needs Attention</span></td>
+          </tr>
+          <tr>
+            <td><strong>Parklands Villa</strong></td>
+            <td>4</td>
+            <td>4</td>
+            <td>100%</td>
+            <td>KSh 320,000</td>
+            <td><span style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Excellent</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Maintenance Summary -->
+    <section style="margin-top: 40px;">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Maintenance Summary</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div class="card">
+          <h3>Total Requests</h3>
+          <p>28</p>
+          <div style="margin-top: 15px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <span style="font-size: 0.85rem; color: #666;">Completed</span>
+              <span style="font-size: 0.85rem; font-weight: 600;">53%</span>
+            </div>
+            <div style="height: 8px; background: #e0e0e0; border-radius: 10px; overflow: hidden;">
+              <div style="height: 100%; width: 53%; background: #27ae60;"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h3>Avg. Response Time</h3>
+          <p>2.5 Days</p>
+          <small style="color: #27ae60;">↓ 0.5 days improvement</small>
+        </div>
+        
+        <div class="card">
+          <h3>Maintenance Costs</h3>
+          <p>KSh 85,000</p>
+          <small style="color: #666;">This Month</small>
+        </div>
+        
+        <div class="card">
+          <h3>Customer Satisfaction</h3>
+          <p>4.7/5.0</p>
+          <small style="color: #27ae60;">⭐⭐⭐⭐⭐</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tenant Analytics -->
+    <section style="margin-top: 40px;">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Tenant Analytics</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+        <div class="chart-card">
+          <h3>Payment Status</h3>
+          <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+            <div style="text-align: center;">
+              <div style="width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(#27ae60 0% 70%, #e0e0e0 70% 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center;">
+                  <strong style="font-size: 1.5rem; color: #27ae60;">70%</strong>
+                </div>
+              </div>
+              <p style="margin-top: 10px; color: #666;">Paid On Time</p>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; gap: 15px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 15px; height: 15px; background: #27ae60; border-radius: 3px;"></div>
+                <span style="font-size: 0.9rem;">On Time (18)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 15px; height: 15px; background: #ffc107; border-radius: 3px;"></div>
+                <span style="font-size: 0.9rem;">Late (5)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 15px; height: 15px; background: #dc3545; border-radius: 3px;"></div>
+                <span style="font-size: 0.9rem;">Overdue (2)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Lease Expiry Timeline</h3>
+          <div style="margin-top: 20px;">
+            <div style="margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size: 0.9rem;">Within 1 Month</span>
+                <strong style="color: #dc3545;">3</strong>
+              </div>
+              <div style="height: 10px; background: #f8d7da; border-radius: 10px;"></div>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size: 0.9rem;">1-3 Months</span>
+                <strong style="color: #ffc107;">5</strong>
+              </div>
+              <div style="height: 10px; background: #fff3cd; border-radius: 10px;"></div>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size: 0.9rem;">3-6 Months</span>
+                <strong style="color: #007bff;">7</strong>
+              </div>
+              <div style="height: 10px; background: #cfe2ff; border-radius: 10px;"></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size: 0.9rem;">6+ Months</span>
+                <strong style="color: #27ae60;">10</strong>
+              </div>
+              <div style="height: 10px; background: #d4edda; border-radius: 10px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    function generateReport() {
+      const reportType = document.getElementById('reportType').value;
+      const timePeriod = document.getElementById('timePeriod').value;
+      const property = document.getElementById('propertyFilter').value;
+      
+      alert(`Generating ${reportType} report for ${timePeriod} (Property: ${property})...\n\nThis feature will be fully implemented in the next version.`);
+    }
+  </script>
+</body>
+</html>

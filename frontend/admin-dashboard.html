@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin Dashboard - EstateHub">
+  <title>Admin Dashboard | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏢 Admin Panel</h2>
+    <ul>
+      <li><a href="admin-dashboard.html" class="active">📊 Dashboard</a></li>
+      <li><a href="properties.html">🏘 Properties</a></li>
+      <li><a href="tenants.html">👥 Tenants</a></li>
+      <li><a href="payments.html">💰 Payments</a></li>
+      <li><a href="maintenance.html">🔧 Maintenance</a></li>
+      <li><a href="reports.html">📋 Reports</a></li>
+      <li><a href="index.html">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p id="currentDate" style="color: #666; margin-top: 5px;"></p>
+      </div>
+      <button class="btn" onclick="window.location.href='properties.html'">+ Add Property</button>
+    </header>
+
+    <!-- Statistics Cards -->
+    <section class="cards">
+      <div class="card">
+        <h3>Total Properties</h3>
+        <p>24</p>
+        <small style="color: #27ae60;">↑ 3 this month</small>
+      </div>
+      <div class="card">
+        <h3>Active Tenants</h3>
+        <p>18</p>
+        <small style="color: #666;">75% occupancy</small>
+      </div>
+      <div class="card">
+        <h3>Monthly Revenue</h3>
+        <p style="font-size: 1.5rem;">KSh 1.2M</p>
+        <small style="color: #27ae60;">↑ 12% vs last month</small>
+      </div>
+      <div class="card">
+        <h3>Pending Requests</h3>
+        <p style="color: #ffc107;">5</p>
+        <small style="color: #666;">Maintenance</small>
+      </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts">
+      <div class="chart-card">
+        <h3>Revenue Overview</h3>
+        <div style="height: 250px; display: flex; align-items: flex-end; gap: 10px; padding: 20px 0;">
+          <div style="flex: 1; background: linear-gradient(to top, #007bff, #0056b3); height: 60%; border-radius: 8px 8px 0 0;"></div>
+          <div style="flex: 1; background: linear-gradient(to top, #007bff, #0056b3); height: 75%; border-radius: 8px 8px 0 0;"></div>
+          <div style="flex: 1; background: linear-gradient(to top, #007bff, #0056b3); height: 85%; border-radius: 8px 8px 0 0;"></div>
+          <div style="flex: 1; background: linear-gradient(to top, #007bff, #0056b3); height: 70%; border-radius: 8px 8px 0 0;"></div>
+          <div style="flex: 1; background: linear-gradient(to top, #007bff, #0056b3); height: 95%; border-radius: 8px 8px 0 0;"></div>
+          <div style="flex: 1; background: linear-gradient(to top, #007bff, #0056b3); height: 100%; border-radius: 8px 8px 0 0;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-around; color: #666; font-size: 0.85rem;">
+          <span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Property Status</h3>
+        <div style="display: flex; justify-content: center; align-items: center; height: 250px;">
+          <div style="width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(#27ae60 0% 75%, #ffc107 75% 100%); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 140px; height: 140px; border-radius: 50%; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <strong style="font-size: 2rem; color: #004aad;">75%</strong>
+              <span style="color: #666; font-size: 0.9rem;">Occupied</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 15px; height: 15px; background: #27ae60; border-radius: 3px;"></div>
+            <span style="font-size: 0.9rem; color: #666;">Occupied (18)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 15px; height: 15px; background: #ffc107; border-radius: 3px;"></div>
+            <span style="font-size: 0.9rem; color: #666;">Available (6)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Activities -->
+    <section class="table-section" style="margin-top: 40px;">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Recent Activities</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Property/Tenant</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nov 16, 2025</td>
+            <td>Rent Payment Received</td>
+            <td>Alice Mwangi - Sunset Apartments</td>
+            <td>KSh 50,000</td>
+            <td><span class="status available">Completed</span></td>
+          </tr>
+          <tr>
+            <td>Nov 15, 2025</td>
+            <td>New Maintenance Request</td>
+            <td>City Center Loft - Unit 3A</td>
+            <td>-</td>
+            <td><span class="status occupied">Pending</span></td>
+          </tr>
+          <tr>
+            <td>Nov 14, 2025</td>
+            <td>New Tenant Added</td>
+            <td>David Kamau - Green Valley Estate</td>
+            <td>KSh 75,000</td>
+            <td><span class="status available">Active</span></td>
+          </tr>
+          <tr>
+            <td>Nov 13, 2025</td>
+            <td>Property Listed</td>
+            <td>Kilimani Heights - Unit 12B</td>
+            <td>-</td>
+            <td><span class="status available">Available</span></td>
+          </tr>
+          <tr>
+            <td>Nov 12, 2025</td>
+            <td>Maintenance Completed</td>
+            <td>Sunset Apartments - Unit 5B</td>
+            <td>KSh 5,000</td>
+            <td><span class="status available">Completed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Quick Actions -->
+    <section style="margin-top: 40px;">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Quick Actions</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <button class="btn" onclick="window.location.href='properties.html'" style="padding: 20px;">
+          🏘 Add New Property
+        </button>
+        <button class="btn" onclick="window.location.href='tenants.html'" style="padding: 20px; background: #27ae60;">
+          👥 Add New Tenant
+        </button>
+        <button class="btn" onclick="window.location.href='payments.html'" style="padding: 20px; background: #ffc107; color: #333;">
+          💰 Record Payment
+        </button>
+        <button class="btn" onclick="window.location.href='reports.html'" style="padding: 20px; background: #6c757d;">
+          📋 Generate Report
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Display current date
+    const dateElement = document.getElementById('currentDate');
+    if (dateElement) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      dateElement.textContent = new Date().toLocaleDateString('en-US', options);
+    }
+  </script>
+</body>
+</html>

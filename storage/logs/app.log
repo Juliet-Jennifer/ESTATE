@@ -1,0 +1,19 @@
+[2025-11-16 14:38:28] [INFO] Migration completed: A_create_users_table
+[2025-11-16 14:38:28] [INFO] Migration completed: B_create_properties_table
+[2025-11-16 14:38:28] [INFO] Migration completed: C_create_tenants_table
+[2025-11-16 14:38:28] [INFO] Migration completed: D_create_maintenance_table
+[2025-11-16 14:38:28] [ERROR] Migration class ECreateReportsTable not found | {"file":"\/home\/swaynel\/Documents\/projects\/ESTATE\/EstateHub-backend\/database\/migrations\/E_create_reports_table.php"}
+[2025-11-16 14:45:32] [INFO] Migration completed: A_create_users_table
+[2025-11-16 14:45:32] [INFO] Migration completed: B_create_properties_table
+[2025-11-16 14:45:32] [INFO] Migration completed: C_create_tenants_table
+[2025-11-16 14:45:32] [INFO] Migration completed: D_create_maintenance_table
+[2025-11-16 14:45:32] [INFO] Migration completed: E_create_activity_logs_table
+[2025-11-16 14:45:32] [INFO] Migration completed: F_create_payments_table
+[2025-11-16 14:45:33] [INFO] Migration completed: G_create_notifications_table
+[2025-11-16 14:48:22] [INFO] Migration completed: A_create_users_table
+[2025-11-16 14:48:23] [INFO] Migration completed: B_create_properties_table
+[2025-11-16 14:48:23] [INFO] Migration completed: C_create_tenants_table
+[2025-11-16 14:48:23] [INFO] Migration completed: D_create_maintenance_table
+[2025-11-16 14:48:23] [INFO] Migration completed: E_create_activity_logs_table
+[2025-11-16 14:48:23] [INFO] Migration completed: F_create_payments_table
+[2025-11-16 14:48:24] [INFO] Migration completed: G_create_notifications_table

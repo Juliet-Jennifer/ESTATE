@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage tenants - EstateHub">
+  <title>Tenant Management | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏢 Admin Panel</h2>
+    <ul>
+      <li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+      <li><a href="properties.html">🏘 Properties</a></li>
+      <li><a href="tenants.html" class="active">👥 Tenants</a></li>
+      <li><a href="#">💰 Payments</a></li>
+      <li><a href="#">📋 Reports</a></li>
+      <li><a href="index.html">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>👥 Tenant Management</h1>
+      <button class="btn" id="addTenantBtn">+ Add Tenant</button>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="top-bar">
+      <input type="text" id="searchTenant" placeholder="🔍 Search by name, email, or phone...">
+    </div>
+
+    <section class="table-section">
+      <table id="tenantTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Property</th>
+            <th>Rent Due (KSh)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Tenants will be dynamically loaded here -->
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Add/Edit Tenant Modal -->
+  <div id="tenantModal" class="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Add Tenant</h2>
+      <form id="tenantForm">
+        <input type="hidden" id="tenantId">
+        
+        <label for="tenantName">Full Name</label>
+        <input type="text" id="tenantName" placeholder="e.g., John Doe" required>
+
+        <label for="tenantEmail">Email Address</label>
+        <input type="email" id="tenantEmail" placeholder="e.g., john@example.com" required>
+
+        <label for="tenantPhone">Phone Number</label>
+        <input type="tel" id="tenantPhone" placeholder="e.g., +254 700 000000" required>
+
+        <label for="tenantProperty">Property</label>
+        <select id="tenantProperty" required>
+          <option value="">Select Property</option>
+          <option value="Sunset Apartments">Sunset Apartments</option>
+          <option value="Green Valley Estate">Green Valley Estate</option>
+          <option value="City Center Loft">City Center Loft</option>
+        </select>
+
+        <label for="tenantRentDue">Monthly Rent (KSh)</label>
+        <input type="number" id="tenantRentDue" placeholder="e.g., 50000" required min="0">
+
+        <div class="modal-actions">
+          <button type="submit" class="btn">Save Tenant</button>
+          <button type="button" class="btn cancel" id="closeModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Sample tenant data
+    let tenants = [
+      {
+        id: 1,
+        name: 'Alice Mwangi',
+        email: 'alice.mwangi@email.com',
+        phone: '+254 712 345678',
+        property: 'Sunset Apartments',
+        rentDue: 50000
+      },
+      {
+        id: 2,
+        name: 'Brian Ochieng',
+        email: 'brian.ochieng@email.com',
+        phone: '+254 723 456789',
+        property: 'Green Valley Estate',
+        rentDue: 75000
+      },
+      {
+        id: 3,
+        name: 'Catherine Wanjiku',
+        email: 'catherine.w@email.com',
+        phone: '+254 734 567890',
+        property: 'City Center Loft',
+        rentDue: 60000
+      }
+    ];
+
+    // Render tenants table
+    function renderTenants(filteredTenants = tenants) {
+      const tbody = document.querySelector('#tenantTable tbody');
+      tbody.innerHTML = '';
+
+      filteredTenants.forEach(tenant => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${tenant.id}</td>
+          <td><strong>${tenant.name}</strong></td>
+          <td>${tenant.email}</td>
+          <td>${tenant.phone}</td>
+          <td>${tenant.property}</td>
+          <td>KSh ${tenant.rentDue.toLocaleString()}</td>
+          <td class="action-buttons">
+            <button class="edit" onclick="editTenant(${tenant.id})">✏️ Edit</button>
+            <button class="delete" onclick="deleteTenant(${tenant.id})">🗑️ Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Search functionality
+    document.getElementById('searchTenant')?.addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const filtered = tenants.filter(t => 
+        t.name.toLowerCase().includes(searchTerm) || 
+        t.email.toLowerCase().includes(searchTerm) ||
+        t.phone.toLowerCase().includes(searchTerm)
+      );
+      renderTenants(filtered);
+    });
+
+    // Open add tenant modal
+    document.getElementById('addTenantBtn')?.addEventListener('click', function() {
+      document.getElementById('modalTitle').textContent = 'Add Tenant';
+      document.getElementById('tenantForm').reset();
+      document.getElementById('tenantId').value = '';
+      document.getElementById('tenantModal').classList.add('active');
+    });
+
+    // Close modal
+    document.getElementById('closeModal')?.addEventListener('click', function() {
+      document.getElementById('tenantModal').classList.remove('active');
+    });
+
+    // Save tenant
+    document.getElementById('tenantForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const id = document.getElementById('tenantId').value;
+      const tenant = {
+        id: id ? parseInt(id) : Date.now(),
+        name: document.getElementById('tenantName').value,
+        email: document.getElementById('tenantEmail').value,
+        phone: document.getElementById('tenantPhone').value,
+        property: document.getElementById('tenantProperty').value,
+        rentDue: parseInt(document.getElementById('tenantRentDue').value)
+      };
+
+      if (id) {
+        // Update existing tenant
+        const index = tenants.findIndex(t => t.id === parseInt(id));
+        tenants[index] = tenant;
+      } else {
+        // Add new tenant
+        tenants.push(tenant);
+      }
+
+      renderTenants();
+      document.getElementById('tenantModal').classList.remove('active');
+      alert('Tenant saved successfully!');
+    });
+
+    // Edit tenant
+    window.editTenant = function(id) {
+      const tenant = tenants.find(t => t.id === id);
+      if (!tenant) return;
+
+      document.getElementById('modalTitle').textContent = 'Edit Tenant';
+      document.getElementById('tenantId').value = tenant.id;
+      document.getElementById('tenantName').value = tenant.name;
+      document.getElementById('tenantEmail').value = tenant.email;
+      document.getElementById('tenantPhone').value = tenant.phone;
+      document.getElementById('tenantProperty').value = tenant.property;
+      document.getElementById('tenantRentDue').value = tenant.rentDue;
+      
+      document.getElementById('tenantModal').classList.add('active');
+    };
+
+    // Delete tenant
+    window.deleteTenant = function(id) {
+      if (confirm('Are you sure you want to remove this tenant?')) {
+        tenants = tenants.filter(t => t.id !== id);
+        renderTenants();
+        alert('Tenant removed successfully!');
+      }
+    };
+
+    // Initial render
+    renderTenants();
+  </script>
+</body>
+</html>

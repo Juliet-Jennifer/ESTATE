@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Payment Management - EstateHub">
+  <title>Payments | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏢 Admin Panel</h2>
+    <ul>
+      <li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+      <li><a href="properties.html">🏘 Properties</a></li>
+      <li><a href="tenants.html">👥 Tenants</a></li>
+      <li><a href="payments.html" class="active">💰 Payments</a></li>
+      <li><a href="maintenance.html">🔧 Maintenance</a></li>
+      <li><a href="reports.html">📋 Reports</a></li>
+      <li><a href="index.html">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>💰 Payment Management</h1>
+      <button class="btn" id="recordPaymentBtn">+ Record Payment</button>
+    </header>
+
+    <!-- Payment Summary Cards -->
+    <section class="cards">
+      <div class="card">
+        <h3>Total Collected</h3>
+        <p style="color: #27ae60;">KSh 1,250,000</p>
+        <small style="color: #666;">This Month</small>
+      </div>
+      <div class="card">
+        <h3>Pending Payments</h3>
+        <p style="color: #ffc107;">KSh 350,000</p>
+        <small style="color: #666;">7 Tenants</small>
+      </div>
+      <div class="card">
+        <h3>Overdue Payments</h3>
+        <p style="color: #dc3545;">KSh 100,000</p>
+        <small style="color: #666;">2 Tenants</small>
+      </div>
+      <div class="card">
+        <h3>Collection Rate</h3>
+        <p style="color: #004aad;">78%</p>
+        <small style="color: #27ae60;">↑ 5% vs last month</small>
+      </div>
+    </section>
+
+    <!-- Filter and Search -->
+    <div class="top-bar" style="margin-top: 30px;">
+      <input type="text" id="searchPayment" placeholder="🔍 Search by tenant or property...">
+      <select id="statusFilter">
+        <option value="">All Status</option>
+        <option value="paid">Paid</option>
+        <option value="pending">Pending</option>
+        <option value="overdue">Overdue</option>
+      </select>
+      <select id="monthFilter">
+        <option value="">All Months</option>
+        <option value="november">November 2025</option>
+        <option value="october">October 2025</option>
+        <option value="september">September 2025</option>
+      </select>
+    </div>
+
+    <!-- Payments Table -->
+    <section class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Payment ID</th>
+            <th>Tenant</th>
+            <th>Property</th>
+            <th>Amount (KSh)</th>
+            <th>Due Date</th>
+            <th>Payment Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="paymentsTableBody">
+          <!-- Payments will be dynamically loaded -->
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Record Payment Modal -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Record Payment</h2>
+      <form id="paymentForm">
+        <input type="hidden" id="paymentId">
+        
+        <label for="paymentTenant">Tenant</label>
+        <select id="paymentTenant" required>
+          <option value="">Select Tenant</option>
+          <option value="Alice Mwangi">Alice Mwangi</option>
+          <option value="Brian Ochieng">Brian Ochieng</option>
+          <option value="Catherine Wanjiku">Catherine Wanjiku</option>
+        </select>
+
+        <label for="paymentProperty">Property</label>
+        <select id="paymentProperty" required>
+          <option value="">Select Property</option>
+          <option value="Sunset Apartments">Sunset Apartments</option>
+          <option value="Green Valley Estate">Green Valley Estate</option>
+          <option value="City Center Loft">City Center Loft</option>
+        </select>
+
+        <label for="paymentAmount">Amount (KSh)</label>
+        <input type="number" id="paymentAmount" placeholder="e.g., 50000" required min="0">
+
+        <label for="paymentDate">Payment Date</label>
+        <input type="date" id="paymentDate" required>
+
+        <label for="paymentMethod">Payment Method</label>
+        <select id="paymentMethod" required>
+          <option value="">Select Method</option>
+          <option value="M-Pesa">M-Pesa</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="Cash">Cash</option>
+          <option value="Cheque">Cheque</option>
+        </select>
+
+        <label for="paymentReference">Reference Number</label>
+        <input type="text" id="paymentReference" placeholder="e.g., MPesa Ref: XYZ123">
+
+        <div class="modal-actions">
+          <button type="submit" class="btn">Save Payment</button>
+          <button type="button" class="btn cancel" id="closeModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Sample payment data
+    let payments = [
+      {
+        id: 'PAY001',
+        tenant: 'Alice Mwangi',
+        property: 'Sunset Apartments',
+        amount: 50000,
+        dueDate: '2025-11-01',
+        paymentDate: '2025-11-01',
+        status: 'paid',
+        method: 'M-Pesa',
+        reference: 'QKL123456'
+      },
+      {
+        id: 'PAY002',
+        tenant: 'Brian Ochieng',
+        property: 'Green Valley Estate',
+        amount: 75000,
+        dueDate: '2025-11-01',
+        paymentDate: '2025-11-02',
+        status: 'paid',
+        method: 'Bank Transfer',
+        reference: 'BT789012'
+      },
+      {
+        id: 'PAY003',
+        tenant: 'Catherine Wanjiku',
+        property: 'City Center Loft',
+        amount: 60000,
+        dueDate: '2025-11-01',
+        paymentDate: null,
+        status: 'pending',
+        method: null,
+        reference: null
+      },
+      {
+        id: 'PAY004',
+        tenant: 'David Kamau',
+        property: 'Parklands Villa',
+        amount: 80000,
+        dueDate: '2025-10-01',
+        paymentDate: null,
+        status: 'overdue',
+        method: null,
+        reference: null
+      }
+    ];
+
+    // Render payments table
+    function renderPayments(filteredPayments = payments) {
+      const tbody = document.getElementById('paymentsTableBody');
+      tbody.innerHTML = '';
+
+      filteredPayments.forEach(payment => {
+        const row = document.createElement('tr');
+        
+        let statusClass = '';
+        let statusBg = '';
+        if (payment.status === 'paid') {
+          statusClass = 'available';
+          statusBg = 'background: #d4edda; color: #155724;';
+        } else if (payment.status === 'pending') {
+          statusBg = 'background: #fff3cd; color: #856404;';
+        } else if (payment.status === 'overdue') {
+          statusBg = 'background: #f8d7da; color: #721c24;';
+        }
+
+        row.innerHTML = `
+          <td><strong>${payment.id}</strong></td>
+          <td>${payment.tenant}</td>
+          <td>${payment.property}</td>
+          <td>KSh ${payment.amount.toLocaleString()}</td>
+          <td>${new Date(payment.dueDate).toLocaleDateString()}</td>
+          <td>${payment.paymentDate ? new Date(payment.paymentDate).toLocaleDateString() : '-'}</td>
+          <td><span class="status ${statusClass}" style="${statusBg} padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">${payment.status.toUpperCase()}</span></td>
+          <td class="action-buttons">
+            ${payment.status !== 'paid' ? `<button class="edit" onclick="markAsPaid('${payment.id}')">✓ Mark Paid</button>` : ''}
+            <button class="delete" onclick="viewReceipt('${payment.id}')">📄 Receipt</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Search functionality
+    document.getElementById('searchPayment')?.addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const filtered = payments.filter(p => 
+        p.tenant.toLowerCase().includes(searchTerm) || 
+        p.property.toLowerCase().includes(searchTerm) ||
+        p.id.toLowerCase().includes(searchTerm)
+      );
+      renderPayments(filtered);
+    });
+
+    // Filter by status
+    document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+      const status = e.target.value;
+      const filtered = status ? payments.filter(p => p.status === status) : payments;
+      renderPayments(filtered);
+    });
+
+    // Open payment modal
+    document.getElementById('recordPaymentBtn')?.addEventListener('click', function() {
+      document.getElementById('modalTitle').textContent = 'Record Payment';
+      document.getElementById('paymentForm').reset();
+      document.getElementById('paymentId').value = '';
+      
+      // Set today's date as default
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('paymentDate').value = today;
+      
+      document.getElementById('paymentModal').classList.add('active');
+    });
+
+    // Close modal
+    document.getElementById('closeModal')?.addEventListener('click', function() {
+      document.getElementById('paymentModal').classList.remove('active');
+    });
+
+    // Save payment
+    document.getElementById('paymentForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const payment = {
+        id: 'PAY' + String(payments.length + 1).padStart(3, '0'),
+        tenant: document.getElementById('paymentTenant').value,
+        property: document.getElementById('paymentProperty').value,
+        amount: parseInt(document.getElementById('paymentAmount').value),
+        dueDate: new Date().toISOString().split('T')[0],
+        paymentDate: document.getElementById('paymentDate').value,
+        status: 'paid',
+        method: document.getElementById('paymentMethod').value,
+        reference: document.getElementById('paymentReference').value
+      };
+
+      payments.unshift(payment);
+      renderPayments();
+      document.getElementById('paymentModal').classList.remove('active');
+      alert('Payment recorded successfully!');
+    });
+
+    // Mark as paid
+    window.markAsPaid = function(id) {
+      const payment = payments.find(p => p.id === id);
+      if (!payment) return;
+
+      // Pre-fill form with payment details
+      document.getElementById('modalTitle').textContent = 'Record Payment for ' + payment.tenant;
+      document.getElementById('paymentTenant').value = payment.tenant;
+      document.getElementById('paymentProperty').value = payment.property;
+      document.getElementById('paymentAmount').value = payment.amount;
+      document.getElementById('paymentDate').value = new Date().toISOString().split('T')[0];
+      
+      document.getElementById('paymentModal').classList.add('active');
+    };
+
+    // View receipt
+    window.viewReceipt = function(id) {
+      const payment = payments.find(p => p.id === id);
+      if (!payment) return;
+      
+      alert(`Payment Receipt\n\nPayment ID: ${payment.id}\nTenant: ${payment.tenant}\nProperty: ${payment.property}\nAmount: KSh ${payment.amount.toLocaleString()}\nStatus: ${payment.status.toUpperCase()}\n${payment.paymentDate ? 'Payment Date: ' + new Date(payment.paymentDate).toLocaleDateString() : ''}\n${payment.method ? 'Method: ' + payment.method : ''}\n${payment.reference ? 'Reference: ' + payment.reference : ''}`);
+    };
+
+    // Initial render
+    renderPayments();
+  </script>
+</body>
+</html>

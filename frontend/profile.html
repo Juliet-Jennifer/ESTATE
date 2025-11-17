@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="User Profile - EstateHub">
+  <title>My Profile | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard">
+  <div class="sidebar">
+    <h2>🏢 Admin Panel</h2>
+    <ul>
+      <li><a href="admin-dashboard.html">📊 Dashboard</a></li>
+      <li><a href="properties.html">🏘 Properties</a></li>
+      <li><a href="tenants.html">👥 Tenants</a></li>
+      <li><a href="payments.html">💰 Payments</a></li>
+      <li><a href="maintenance.html">🔧 Maintenance</a></li>
+      <li><a href="reports.html">📋 Reports</a></li>
+      <li><a href="profile.html" class="active">👤 Profile</a></li>
+      <li><a href="index.html">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>👤 My Profile</h1>
+      <button class="btn" onclick="document.getElementById('editProfileBtn').click()">✏️ Edit Profile</button>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; margin-top: 30px;">
+      <!-- Profile Card -->
+      <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; height: fit-content;">
+        <div style="width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #007bff, #0056b3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 4rem; color: white;">
+          👤
+        </div>
+        <h2 style="margin: 0 0 10px; color: #2c3e50;">John Kamau</h2>
+        <p style="color: #666; margin: 0 0 20px;">Property Manager</p>
+        <div style="padding: 15px; background: #f7f8fc; border-radius: 8px; margin-bottom: 15px;">
+          <p style="margin: 5px 0; font-size: 0.9rem; color: #666;">📧 john.kamau@estatehub.com</p>
+          <p style="margin: 5px 0; font-size: 0.9rem; color: #666;">📞 +254 712 345678</p>
+          <p style="margin: 5px 0; font-size: 0.9rem; color: #666;">📍 Nairobi, Kenya</p>
+        </div>
+        <button class="btn" id="editProfileBtn" style="width: 100%; margin-top: 10px;" onclick="openModal('profileModal')">Edit Profile</button>
+      </div>
+
+      <!-- Profile Details -->
+      <div>
+        <!-- Account Information -->
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 25px;">
+          <h3 style="margin: 0 0 20px; color: #2c3e50;">Account Information</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+              <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 5px;">Full Name</label>
+              <p style="margin: 0; font-weight: 600;">John Kamau</p>
+            </div>
+            <div>
+              <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 5px;">Email Address</label>
+              <p style="margin: 0; font-weight: 600;">john.kamau@estatehub.com</p>
+            </div>
+            <div>
+              <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 5px;">Phone Number</label>
+              <p style="margin: 0; font-weight: 600;">+254 712 345678</p>
+            </div>
+            <div>
+              <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 5px;">Role</label>
+              <p style="margin: 0; font-weight: 600;">Property Manager</p>
+            </div>
+            <div>
+              <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 5px;">Member Since</label>
+              <p style="margin: 0; font-weight: 600;">January 15, 2024</p>
+            </div>
+            <div>
+              <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 5px;">Account Status</label>
+              <p style="margin: 0;"><span style="background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Active</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Statistics -->
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 25px;">
+          <h3 style="margin: 0 0 20px; color: #2c3e50;">My Statistics</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            <div style="text-align: center; padding: 20px; background: #f7f8fc; border-radius: 8px;">
+              <div style="font-size: 2rem; color: #007bff; margin-bottom: 10px;">24</div>
+              <div style="color: #666; font-size: 0.9rem;">Properties Managed</div>
+            </div>
+            <div style="text-align: center; padding: 20px; background: #f7f8fc; border-radius: 8px;">
+              <div style="font-size: 2rem; color: #27ae60; margin-bottom: 10px;">18</div>
+              <div style="color: #666; font-size: 0.9rem;">Active Tenants</div>
+            </div>
+            <div style="text-align: center; padding: 20px; background: #f7f8fc; border-radius: 8px;">
+              <div style="font-size: 2rem; color: #ffc107; margin-bottom: 10px;">5</div>
+              <div style="color: #666; font-size: 0.9rem;">Pending Requests</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Settings -->
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+          <h3 style="margin: 0 0 20px; color: #2c3e50;">Security Settings</h3>
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; color: #666; font-size: 0.9rem; margin-bottom: 5px;">Password</label>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <p style="margin: 0; font-weight: 600;">••••••••••••</p>
+              <button class="btn" style="padding: 8px 16px;" onclick="openModal('changePasswordModal')">Change Password</button>
+            </div>
+          </div>
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+              <input type="checkbox" checked style="width: 18px; height: 18px;">
+              <span style="font-size: 0.95rem;">Enable email notifications</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-top: 10px;">
+              <input type="checkbox" checked style="width: 18px; height: 18px;">
+              <span style="font-size: 0.95rem;">Enable SMS notifications</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <h2>Edit Profile</h2>
+      <form id="profileForm">
+        <label for="profileName">Full Name</label>
+        <input type="text" id="profileName" value="John Kamau" required>
+
+        <label for="profileEmail">Email Address</label>
+        <input type="email" id="profileEmail" value="john.kamau@estatehub.com" required>
+
+        <label for="profilePhone">Phone Number</label>
+        <input type="tel" id="profilePhone" value="+254 712 345678" required>
+
+        <label for="profileLocation">Location</label>
+        <input type="text" id="profileLocation" value="Nairobi, Kenya" required>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn">Save Changes</button>
+          <button type="button" class="btn cancel" onclick="closeModal('profileModal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div id="changePasswordModal" class="modal">
+    <div class="modal-content">
+      <h2>Change Password</h2>
+      <form id="passwordForm">
+        <label for="currentPassword">Current Password</label>
+        <div class="password-container">
+          <input type="password" id="currentPassword" required>
+          <span class="toggle-password">👁️</span>
+        </div>
+
+        <label for="newPassword">New Password</label>
+        <div class="password-container">
+          <input type="password" id="newPassword" required minlength="6">
+          <span class="toggle-password">👁️</span>
+        </div>
+
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <div class="password-container">
+          <input type="password" id="confirmNewPassword" required minlength="6">
+          <span class="toggle-password">👁️</span>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn">Update Password</button>
+          <button type="button" class="btn cancel" onclick="closeModal('changePasswordModal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Profile form handler
+    document.getElementById('profileForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('profileName').value;
+      const email = document.getElementById('profileEmail').value;
+      const phone = document.getElementById('profilePhone').value;
+      
+      // Simulate saving (in production, this would be an API call)
+      alert('Profile updated successfully!');
+      closeModal('profileModal');
+    });
+
+    // Password form handler
+    document.getElementById('passwordForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const current = document.getElementById('currentPassword').value;
+      const newPass = document.getElementById('newPassword').value;
+      const confirm = document.getElementById('confirmNewPassword').value;
+      
+      if (newPass !== confirm) {
+        alert('New passwords do not match!');
+        return;
+      }
+      
+      if (newPass.length < 6) {
+        alert('Password must be at least 6 characters long!');
+        return;
+      }
+      
+      // Simulate password change (in production, this would be an API call)
+      alert('Password updated successfully!');
+      closeModal('changePasswordModal');
+      document.getElementById('passwordForm').reset();
+    });
+  </script>
+</body>
+</html>

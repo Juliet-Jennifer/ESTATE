@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login to EstateHub - Access your property management dashboard">
+  <title>Login | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">🏡 EstateHub</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="properties.html">Properties</a></li>
+        <li><a href="maintenance.html">Maintenance</a></li>
+        <li><a href="login.html" class="active">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+      <div class="menu-toggle" id="menuToggle">☰</div>
+    </nav>
+  </header>
+
+  <section class="form-section">
+    <div class="form-container">
+      <h2>Welcome Back</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <span class="toggle-password">👁️</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Login</button>
+        
+        <p class="form-footer">
+          Don't have an account? <a href="register.html">Register here</a>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 EstateHub | All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Login form handler
+    document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // Simple validation
+      if (!email || !password) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      // Simulate login (in production, this would be an API call)
+      // For demo purposes, redirect based on email
+      if (email.includes('admin')) {
+        alert('Login successful! Redirecting to admin dashboard...');
+        window.location.href = 'properties.html';
+      } else {
+        alert('Login successful! Redirecting to tenant dashboard...');
+        window.location.href = 'tenants_dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>

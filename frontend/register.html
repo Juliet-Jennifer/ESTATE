@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Register for EstateHub - Start managing your properties today">
+  <title>Register | EstateHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">🏡 EstateHub</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="properties.html">Properties</a></li>
+        <li><a href="maintenance.html">Maintenance</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html" class="active">Register</a></li>
+      </ul>
+      <div class="menu-toggle" id="menuToggle">☰</div>
+    </nav>
+  </header>
+
+  <section class="form-section">
+    <div class="form-container">
+      <h2>Create Your Account</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="role">Account Type</label>
+          <select id="role" name="role" required>
+            <option value="" disabled selected>Select your role</option>
+            <option value="tenant">Tenant</option>
+            <option value="admin">Property Owner/Manager</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Create a password" required minlength="6">
+            <span class="toggle-password">👁️</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="password-container">
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required minlength="6">
+            <span class="toggle-password">👁️</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Create Account</button>
+        
+        <p class="form-footer">
+          Already have an account? <a href="login.html">Login here</a>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 EstateHub | All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Registration form handler
+    document.getElementById('registerForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const role = document.getElementById('role').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validation
+      if (!name || !email || !role || !password || !confirmPassword) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+      
+      if (password.length < 6) {
+        alert('Password must be at least 6 characters long');
+        return;
+      }
+      
+      // Simulate registration (in production, this would be an API call)
+      alert('Registration successful! Please login with your credentials.');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
